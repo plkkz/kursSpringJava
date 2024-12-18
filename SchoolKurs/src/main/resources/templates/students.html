@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список Студентов</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <h1>Список Студентов</h1>
+    <span th:if="${students.size() == 0}">Список студентов пустой</span>
+    <table th:if="${students.size() > 0}" class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <td>ID</td>
+            <td>Фамилия</td>
+            <td>Имя</td>
+            <td>Отчество</td>
+            <td>Дата рождения</td>
+            <td>Класс</td>
+            <td>Email</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.idStudent}"></td>
+            <td th:text="${student.surnameStudent}"></td>
+            <td th:text="${student.nameStudent}"></td>
+            <td th:text="${student.patronymStudent}"></td>
+            <td th:text="${student.birthdate}"></td>
+            <td th:text="${student.classnum}"></td>
+            <td th:text="${student.email}"></td>
+            <td><a class="btn btn-info" th:href="@{'/students/details/' + ${student.idStudent}}">Подробнее</a></td>
+            <td><a class="btn btn-warning" th:href="@{'/students/update/' + ${student.idStudent}}">Редактировать</a></td>
+            <td><a class="btn btn-danger" th:href="@{'/students/delete/' + ${student.idStudent}}">Удалить</a></td>
+            <td><a class="btn btn-danger" th:href="@{'/students/write/' + ${student.idStudent}}">Написать</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn" th:href="@{'/students/add'}">Добавить студента</a>
+</div>
+<div class="container">
+    <form class="customfrm" action="#" th:action="@{/findstudentsbyclass}" th:object="${classNum}" method="post">
+        <div class="form-group">
+            <p>Класс: <input type="text" class="form-control" placeholder="Введите класс" th:field="*{classNum}"/></p>
+        </div>
+        <p class="singleRow">
+            <input type="submit" class="btn btn-success" value="Поиск" />
+            <input type="reset" class="btn btn-secondary" value="Очистить поле ввода" />
+        </p>
+    </form>
+</div>
+</body>
+</html>
